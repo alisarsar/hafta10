@@ -1,11 +1,22 @@
+import { useState, useEffect } from "react";
 
 function App() {
-    return (
-      <>
-        Merhaba!
-      </>
-    );
-  }
-  
-  export default App;
-  
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((res) => res.json())
+      .then((sonuc) => setData(sonuc));
+  }, []);
+
+  return (
+    <>
+      {data &&
+        data.map((item) => {
+          return <p key={item.id}>{item.title}</p>;
+        })}
+    </>
+  );
+}
+
+export default App;
